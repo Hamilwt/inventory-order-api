@@ -1,0 +1,19 @@
+from fastapi import FastAPI
+from app.core.config import settings
+
+app = FastAPI(
+    title=settings.PROJECT_NAME,
+    version=settings.VERSION,
+    description="A professional backend API for managing inventory and orders."
+)
+
+@app.get("/health", tags=["Health"])
+def health_check():
+    """
+    Check if the API is running successfully.
+    """
+    return {
+        "status": "ok", 
+        "project": settings.PROJECT_NAME,
+        "version": settings.VERSION
+    }

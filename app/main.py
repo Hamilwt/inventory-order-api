@@ -8,6 +8,8 @@ app = FastAPI(
     description="A professional backend API for managing inventory and orders."
 )
 
+app.include_router(products.router)
+
 @app.get("/health", tags=["Health"])
 def health_check():
     """

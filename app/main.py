@@ -5,14 +5,19 @@ from app.core.config import settings
 from app.api.products import router as products_router
 from app.api.orders import router as orders_router
 
-# The standard, out-of-the-box FastAPI setup
+# 1. Import Scalar
+from scalar_fastapi import get_scalar_api_reference 
+
+# 2. Disable the default Swagger and ReDoc UI
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
-    description="A professional backend API for managing inventory and orders."
+    description="A professional backend API for managing inventory and orders.",
+    docs_url=None, 
+    redoc_url=None 
 )
 
-# Attach the routers
+# 3. Attach the routers
 app.include_router(products_router)
 app.include_router(orders_router)
 
@@ -26,3 +31,11 @@ def health_check():
         "project": settings.PROJECT_NAME,
         "version": settings.VERSION
     }
+
+# 4. Serve the beautiful Scalar UI at our /docs route
+@app.get("/docs", include_in_schema=False)
+async def scalar_html():
+    return get_scalar_api_reference(
+        openapi_url=app.openapi_url,
+        title=app.title,
+    )

@@ -1,4 +1,4 @@
-# StockLedger — Inventory & Order Management API
+# Inventory & Order Management API
 
 A resilient, cloud-native backend API for managing product inventory and processing customer orders, built to guarantee data integrity during high-stakes financial transactions.
 
@@ -173,8 +173,8 @@ The suite covers both the happy path (valid orders return `200 OK`) and adversar
 
 The application is containerized with Docker and deployed on [Render](https://render.com). The live API and its interactive docs are available at:
 
-- **API base URL:** `<add-your-render-url-here>`
-- **Docs:** `<add-your-render-url-here>/docs`
+- **API base URL:** `https://inventory-and-order-management-api-k53n.onrender.com`
+- **Docs:** `https://inventory-and-order-management-api-k53n.onrender.com/docs`
 
 ## Project Structure
 

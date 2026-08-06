@@ -173,12 +173,11 @@ The suite covers both the happy path (valid orders return `200 OK`) and adversar
 
 The application is containerized with Docker and deployed on [Render](https://render.com). The live API and its interactive docs are available at:
 
-- **API base URL:** `https://inventory-and-order-management-api-k53n.onrender.com`
-- **Docs:** `https://inventory-and-order-management-api-k53n.onrender.com/docs`
+- **API base URL:** [inventory-and-order-management-api-base](https://inventory-and-order-management-api-k53n.onrender.com)
+- **Docs:** [inventory-and-order-management-api-docs](https://inventory-and-order-management-api-k53n.onrender.com/docs)`
 
 ## Project Structure
 
-> Adjust this to reflect your actual folder layout.
 
 ```
 stockledger-api/

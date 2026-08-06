@@ -3,19 +3,21 @@ import sentry_sdk
 from fastapi import FastAPI
 from app.core.config import settings
 
-# 1. Bulletproof direct imports
-from app.api.products import router as products_router
-from app.api.orders import router as orders_router
-from scalar_fastapi import get_scalar_api_reference 
-
-# 2. Initialize Sentry (Hardcoded for testing)
+# 2. Initialize Sentry
 sentry_sdk.init(
-    dsn="https://eb41bd190d33d51bbc6a867de8bd838f@o4511830720708608.ingest.us.sentry.io/4511862472769536",
+    dsn=os.getenv("SENTRY_DSN"),
     traces_sample_rate=1.0,
     send_default_pii=True,
 )
 
-# 3. Initialize FastAPI and disable default Swagger/ReDoc
+# Bulletproof direct imports
+from app.api.products import router as products_router
+from app.api.orders import router as orders_router
+
+# 1. Import Scalar
+from scalar_fastapi import get_scalar_api_reference 
+
+# 2. Disable the default Swagger and ReDoc UI
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.VERSION,
@@ -24,7 +26,7 @@ app = FastAPI(
     redoc_url=None 
 )
 
-# 4. Attach the routers
+# 3. Attach the routers
 app.include_router(products_router)
 app.include_router(orders_router)
 
@@ -39,7 +41,7 @@ def health_check():
         "version": settings.VERSION
     }
 
-# 5. Serve the beautiful Scalar UI
+# 4. Serve the beautiful Scalar UI at our /docs route
 @app.get("/docs", include_in_schema=False)
 async def scalar_html():
     return get_scalar_api_reference(
@@ -47,7 +49,7 @@ async def scalar_html():
         title=app.title,
     )
 
-# --- Sentry Debug Route ---
+# --- Add this right at the bottom ---
 @app.get("/sentry-debug")
 async def trigger_error():
     division_by_zero = 1 / 0

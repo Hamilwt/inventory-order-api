@@ -26,9 +26,9 @@ A resilient, cloud-native backend API for managing product inventory and process
 
 ## Overview
 
-StockLedger is a backend API designed to mirror the operations of a real e-commerce or warehouse system: it tracks product inventory, accepts customer orders, and — most importantly — never lets stock and order records fall out of sync. Every order either fully succeeds (stock deducted, order recorded) or fully fails (nothing changes), the same way a bank transfer either completes or bounces back in full.
+This project is a backend API designed to mirror the operations of a real e-commerce or warehouse system: it tracks product inventory, accepts customer orders, and — most importantly — never lets stock and order records fall out of sync. Every order either fully succeeds (stock deducted, order recorded) or fully fails (nothing changes), the same way a bank transfer either completes or bounces back in full.
 
-It's built with a modern, production-style Python stack: fully containerized, migration-driven, tested, and monitored with real error telemetry.
+It is built with a modern, production-style Python stack: fully containerized, migration-driven, tested, and monitored with real error telemetry.
 
 ## Features
 
@@ -36,7 +36,7 @@ It's built with a modern, production-style Python stack: fully containerized, mi
 - **Stock-aware conflict handling** — orders that request more stock than is available are rejected with a `409 Conflict`, and nothing is partially applied.
 - **Strict request validation** — Pydantic v2 rejects malformed or nonsensical payloads (e.g. negative quantities) before they reach the database layer.
 - **Historical price integrity** — each order line item stores the price at the time of purchase, so later price changes never rewrite order history.
-- **Auto-generated API docs** — interactive Swagger/OpenAPI docs out of the box via FastAPI.
+- **Auto-generated API docs** — interactive Scalar UI documentation out of the box via FastAPI.
 - **Schema migrations** — Alembic tracks and applies every database change.
 - **Automated test suite** — Pytest exercises both the happy path and adversarial cases (e.g. ordering more units than are in stock).
 - **Live error telemetry** — Sentry captures unhandled exceptions in production with full stack traces.
@@ -100,10 +100,9 @@ The `POST /orders` endpoint is the core of the system. Every submitted order run
 
 ## API Endpoints
 
-> Update this table to match your actual route names if they differ.
-
 | Method | Endpoint | Description |
 |---|---|---|
+| `GET` | `/health` | Check if the API is running successfully |
 | `GET` | `/products` | List all products |
 | `POST` | `/products` | Create a new product |
 | `GET` | `/products/{id}` | Get a single product |
@@ -111,7 +110,7 @@ The `POST /orders` endpoint is the core of the system. Every submitted order run
 | `GET` | `/orders/{id}` | Get a single order with its line items |
 | `GET` | `/orders` | List all orders |
 
-Full interactive documentation is available at `/docs` (Swagger UI) once the app is running.
+Full interactive documentation is available at `/docs` (Scalar UI) once the application is running.
 
 ## Getting Started
 
@@ -124,8 +123,8 @@ Full interactive documentation is available at `/docs` (Swagger UI) once the app
 ### Local Installation
 
 ```bash
-git clone https://github.com/<your-username>/stockledger-api.git
-cd stockledger-api
+git clone https://github.com/Hamilwt/inventory-order-api.git
+cd inventory-order-api
 python -m venv venv
 source venv/bin/activate   # Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -157,8 +156,8 @@ Visit `http://localhost:8000/docs` for the interactive API docs.
 ### Run with Docker
 
 ```bash
-docker build -t stockledger-api .
-docker run -p 8000:8000 --env-file .env stockledger-api
+docker build -t inventory-api .
+docker run -p 8000:8000 --env-file .env inventory-api
 ```
 
 ## Running Tests
@@ -173,14 +172,13 @@ The suite covers both the happy path (valid orders return `200 OK`) and adversar
 
 The application is containerized with Docker and deployed on [Render](https://render.com). The live API and its interactive docs are available at:
 
-- **API base URL:** [inventory-and-order-management-api-base](https://inventory-and-order-management-api-k53n.onrender.com)
-- **Docs:** [inventory-and-order-management-api-docs](https://inventory-and-order-management-api-k53n.onrender.com/docs)`
+- **API Base URL:** [https://inventory-and-order-management-api-k53n.onrender.com](https://inventory-and-order-management-api-k53n.onrender.com)
+- **Live Documentation:** [https://inventory-and-order-management-api-k53n.onrender.com/docs](https://inventory-and-order-management-api-k53n.onrender.com/docs)
 
 ## Project Structure
 
-
 ```
-stockledger-api/
+inventory-order-api/
 ├── app/
 │   ├── main.py
 │   ├── models/
